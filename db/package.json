@@ -1,0 +1,15 @@
+{
+  "name": "library-management-db",
+  "version": "1.0.0",
+  "description": "Database artifacts for library management",
+  "engines": {
+    "node": "18.x || 20.x || 22.x"
+  },
+  "dependencies": {
+    "@sap/hana-client": "^2.27.19",
+    "@sap/hdi-deploy": "^5"
+  },
+  "scripts": {
+    "start": "node node_modules/@sap/hdi-deploy/deploy.js --exit"
+  }
+}

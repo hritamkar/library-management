@@ -1,0 +1,151 @@
+# CAP Java Project .gitignore
+
+# ===========================
+# Build Output & Artifacts
+# ===========================
+target/
+*.jar
+*.war
+*.ear
+*.class
+mta_archives/
+.flattened-pom.xml
+gen/
+dist/
+
+# ===========================
+# IDE & Editor
+# ===========================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ===========================
+# Node.js & NPM
+# ===========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
+# ===========================
+# CAP Specific
+# ===========================
+# Generated files
+gen/
+**/gen/
+**/src/gen/
+_out/
+*.db
+default-*.json
+connection.properties
+
+# CDS build artifacts
+srv/src/gen/
+srv/src/main/resources/edmx/
+db/src/gen/
+
+# ===========================
+# Cloud Foundry & MTA
+# ===========================
+mta_archives/
+mta-op-*/
+.mta/
+*.mtar
+Makefile*.mta
+.env
+
+# ===========================
+# Logs
+# ===========================
+*.log
+logs/
+*.log.*
+
+# ===========================
+# OS Specific
+# ===========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ===========================
+# Security & Credentials
+# ===========================
+*.key
+*.pem
+*.p12
+*.jks
+*credentials*
+*.env
+.envrc
+
+# ===========================
+# Testing
+# ===========================
+coverage/
+.nyc_output/
+
+# ===========================
+# Temporary Files
+# ===========================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+
+# ===========================
+# Documentation (Optional)
+# ===========================
+# Uncomment if you want to exclude generated docs
+# docs/_build/
+# *.pdf
+
+# ===========================
+# Database
+# ===========================
+*.sqlite
+*.db
+
+# ===========================
+# Maven Specific
+# ===========================
+dependency-reduced-pom.xml
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===========================
+# Project Specific
+# ===========================
+# Add any project-specific ignores here
+

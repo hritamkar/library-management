@@ -1,0 +1,50 @@
+{
+  "xsappname": "library-management",
+  "tenant-mode": "shared",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin access"
+    },
+    {
+      "name": "$XSAPPNAME.Callback",
+      "description": "Multitenant callback access",
+      "grant-as-authority-to-apps": [
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    },
+    {
+      "name": "$XSAPPNAME.mtcallback",
+      "description": "Scope for CAP multitenancy callbacks",
+      "grant-as-authority-to-apps": [
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Admin",
+      "description": "Administrator",
+      "scope-references": [
+        "$XSAPPNAME.Admin"
+      ]
+    },
+    {
+      "name": "MTCallback",
+      "description": "Multitenancy callback role",
+      "scope-references": [
+        "$XSAPPNAME.Callback",
+        "$XSAPPNAME.mtcallback"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "https://*.cfapps.*.hana.ondemand.com/**"
+    ],
+    "grant-types": [
+      "authorization_code",
+      "client_credentials"
+    ]
+  }
+}

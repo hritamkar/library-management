@@ -1,0 +1,19 @@
+{
+  "name": "library-management-cds",
+  "version": "1.0.0",
+  "description": "A multitenant CDS application for library management",
+  "license": "ISC",
+
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "multiTenant": true
+      }
+    }
+  },
+
+  "devDependencies": {
+    "@sap/cds-dk": "^9.5.0"
+  }
+}

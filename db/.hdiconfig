@@ -1,0 +1,6 @@
+{
+  "hdi-deploy": {
+    "include_filter": ["src/gen/**/*"]
+  }
+}
+
