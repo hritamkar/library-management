@@ -46,42 +46,6 @@ This application provides comprehensive library management capabilities with sup
 | **Routing** | Application Router |
 | **Deployment** | Cloud Foundry (SAP BTP) |
 
-### Project Structure
-
-```
-library-management/
-├── db/                                 # Database layer
-│   ├── data-model.cds                 # CDS entity definitions
-│   └── data/                          # Sample data (CSV)
-│       ├── my.library-Books.csv
-│       └── my.library-Books_texts.csv
-│
-├── srv/                                # Service layer
-│   ├── cat-service.cds                # Service definitions
-│   ├── pom.xml                        # Maven configuration
-│   └── src/main/
-│       ├── java/customer/library_management/
-│       │   ├── Application.java       # Spring Boot main class
-│       │   ├── handlers/              # Business logic
-│       │   │   ├── BookHandler.java   # Book operations
-│       │   │   ├── MemberHandler.java # Member operations
-│       │   │   └── LoanHandler.java   # Loan operations
-│       │   └── controllers/           # REST controllers
-│       │       └── SubscriptionController.java
-│       └── resources/
-│           ├── application.yaml       # Application config
-│           └── schema-h2.sql          # H2 schema (local)
-│
-├── approuter/                          # Application Router
-│   ├── xs-app.json                    # Routing configuration
-│   └── package.json
-│
-├── mta.yaml                            # Multi-Target App descriptor
-├── xs-security.json                   # Security configuration
-├── package.json                       # Root dependencies
-└── README.md                          # This file
-```
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -110,13 +74,15 @@ Before you begin, ensure you have the following installed:
 3. **Install service dependencies and build**
    ```bash
    cd srv
-   mvn clean install
+   mvn clean install -DskipTests
    cd ..
    ```
 
+After clean install, go to srv/src/gen and mark the java folder as "Generated Sources Root" in your IDE.
+
 ## 💻 Running Locally
 
-### Option 1: Run with Maven (Recommended for Development)
+### Run with Maven (Recommended for Development)
 
 1. **Navigate to service directory**
    ```bash
@@ -133,39 +99,6 @@ Before you begin, ensure you have the following installed:
    - 📊 OData Service: http://localhost:8080/odata/v4/LibraryService
    - 📖 Service Metadata: http://localhost:8080/odata/v4/LibraryService/$metadata
 
-### Option 2: Run with CAP CLI
-
-```bash
-cds watch
-```
-
-### Testing the Local Instance
-
-**Create a Book:**
-```bash
-curl -X POST http://localhost:8080/odata/v4/LibraryService/Books \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Clean Code",
-    "author": "Robert C. Martin",
-    "stock": 5
-  }'
-```
-
-**Register a Member:**
-```bash
-curl -X POST http://localhost:8080/odata/v4/LibraryService/Members \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "John Doe",
-    "email": "john.doe@example.com"
-  }'
-```
-
-**List Books:**
-```bash
-curl http://localhost:8080/odata/v4/LibraryService/Books
-```
 
 ## 🔨 Building for Production
 
@@ -217,11 +150,6 @@ npm install
 
 ```bash
 cf login -a <api-endpoint>
-```
-
-**Example for US10 region:**
-```bash
-cf login -a https://api.cf.us10-001.hana.ondemand.com
 ```
 
 #### 2. Target Your Org and Space
@@ -284,12 +212,9 @@ After successful deployment:
 **Example Book Entity:**
 ```json
 {
-  "ID": "uuid",
   "title": "Clean Code",
   "author": "Robert C. Martin",
-  "stock": 5,
-  "createdAt": "2026-01-11T10:00:00Z",
-  "modifiedAt": "2026-01-11T10:00:00Z"
+  "stock": 5
 }
 ```
 
@@ -306,10 +231,8 @@ After successful deployment:
 **Example Member Entity:**
 ```json
 {
-  "ID": "uuid",
   "name": "John Doe",
-  "email": "john.doe@example.com",
-  "createdAt": "2026-01-11T10:00:00Z"
+  "email": "john.doe@example.com"
 }
 ```
 
@@ -324,17 +247,13 @@ After successful deployment:
 **Example Loan Entity:**
 ```json
 {
-  "ID": "uuid",
   "bookId": "book-uuid",
   "memberId": "member-uuid",
   "loanDate": "2026-01-11",
   "dueDate": "2026-02-10",
-  "returnDate": null,
-  "fine": 0
+  "returnDate": null
 }
 ```
-
-#### Custom Actions
 
 **Return Book:**
 ```bash
@@ -422,7 +341,7 @@ curl -X POST http://localhost:8080/odata/v4/LibraryService/returnBook \
     "email": "jane.smith@example.com"
   }'
 
-# Response: { "value": 0 }  // No fine
+# Response: { "fine": 0 }  // No fine
 ```
 
 ### Scenario 4: Returning a Book (Overdue)
@@ -430,7 +349,7 @@ curl -X POST http://localhost:8080/odata/v4/LibraryService/returnBook \
 If the book is returned 5 days late:
 
 ```bash
-# Response: { "value": 50 }  // ₹10 × 5 days = ₹50
+# Response: { "fine": 50 }  // ₹10 × 5 days = ₹50
 ```
 
 ## 🔧 Configuration
@@ -596,32 +515,11 @@ Members (1) ──< (N) Loans (N) >── (1) Books
 - fine (Integer, default 0)
 - Managed fields
 
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
 ## 🙏 Acknowledgments
 
 - [SAP Cloud Application Programming Model](https://cap.cloud.sap/)
 - [SAP Business Technology Platform](https://www.sap.com/products/technology-platform.html)
 - Spring Boot Framework
-
-## 📞 Support
-
-For issues, questions, or suggestions:
-- Open an issue in the repository
-- Contact the development team
-
 ---
 
 **Version:** 1.0.0  
